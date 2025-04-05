@@ -62,33 +62,38 @@
       height: 100% !important;
     }
 
-    /* Disable clicking on links */
+    /* Ensure the video player and controls remain clickable */
+    .plyr__controls, .plyr__video-wrapper {
+      pointer-events: auto !important; /* Allow clicks on the controls */
+    }
+
+    /* Disable clicking on links in the rest of the page */
     a {
       pointer-events: none;
     }
 
-    /* Disable ability to open links in new windows */
-    a:active, a:focus {
-      outline: none;
-    }
-
-    /* Prevent redirections via JavaScript */
-    window.location.replace = function() {};
-    window.location.assign = function() {};
-
-    /* Block right-click menu */
+    /* Disable right-click context menu for the entire body */
     body {
       user-select: none; /* Disable text selection */
     }
 
-    /* Prevent interaction with embedded video thumbnails in the "More Videos" section */
+    /* Prevent interactions in unwanted sections of the player */
     .ytp-thumbnail, .ytp-related, .ytp-upnext {
       pointer-events: none !important;
     }
 
-    /* Prevent interactions in other parts of the player */
-    .plyr__controls, .plyr__video-wrapper {
-      pointer-events: none !important;
+    /* Block clicks on any other elements while allowing the video to be interacted with */
+    body {
+      pointer-events: none;
+    }
+
+    #player, .plyr__video-wrapper, .plyr__controls {
+      pointer-events: auto; /* Re-enable pointer events for video player */
+    }
+
+    /* Allow clicking on overlay initially */
+    .overlay {
+      pointer-events: auto; /* Allow interaction with loading overlay initially */
     }
 
     @keyframes fadeOut {
