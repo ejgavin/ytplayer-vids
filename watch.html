@@ -67,33 +67,19 @@
       pointer-events: auto !important; /* Allow clicks on the controls */
     }
 
-    /* Disable clicking on links in the rest of the page */
-    a {
-      pointer-events: none;
+    /* Block clicks on any other elements, including links */
+    body, body * {
+      pointer-events: none !important;  /* Block all clicks */
+    }
+
+    /* Allow clicking on video and controls only */
+    #player, .plyr__video-wrapper, .plyr__controls {
+      pointer-events: auto !important;
     }
 
     /* Disable right-click context menu for the entire body */
-    body {
-      user-select: none; /* Disable text selection */
-    }
-
-    /* Prevent interactions in unwanted sections of the player */
-    .ytp-thumbnail, .ytp-related, .ytp-upnext {
-      pointer-events: none !important;
-    }
-
-    /* Block clicks on any other elements while allowing the video to be interacted with */
-    body {
-      pointer-events: none;
-    }
-
-    #player, .plyr__video-wrapper, .plyr__controls {
-      pointer-events: auto; /* Re-enable pointer events for video player */
-    }
-
-    /* Allow clicking on overlay initially */
-    .overlay {
-      pointer-events: auto; /* Allow interaction with loading overlay initially */
+    document.body {
+      user-select: none;
     }
 
     @keyframes fadeOut {
