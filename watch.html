@@ -62,24 +62,24 @@
       height: 100% !important;
     }
 
-    /* Ensure the video player and controls remain clickable */
+    /* Disable clicking on links */
+    a {
+      pointer-events: none;
+    }
+
+    /* Prevent right-click menu */
+    body {
+      user-select: none; /* Disable text selection */
+    }
+
+    /* Prevent interactions in other parts of the player */
+    .ytp-thumbnail, .ytp-related, .ytp-upnext {
+      pointer-events: none !important;
+    }
+
+    /* Prevent interaction with the controls */
     .plyr__controls, .plyr__video-wrapper {
-      pointer-events: auto !important; /* Allow clicks on the controls */
-    }
-
-    /* Block clicks on any other elements, including links */
-    body, body * {
-      pointer-events: none !important;  /* Block all clicks */
-    }
-
-    /* Allow clicking on video and controls only */
-    #player, .plyr__video-wrapper, .plyr__controls {
-      pointer-events: auto !important;
-    }
-
-    /* Disable right-click context menu for the entire body */
-    document.body {
-      user-select: none;
+      pointer-events: none !important;
     }
 
     @keyframes fadeOut {
@@ -117,11 +117,11 @@
 
       window.player = player;
 
-      // Unmute the player after 1 second of play
+      // Attempt to unmute once the user interacts with the page
       player.on('play', () => {
         setTimeout(() => {
-          player.muted = false; // Unmute the video after 1 second
-        }, 1000);  // 1000ms = 1 second
+          player.muted = false; // Unmute the video after user interaction
+        }, 1000);  // 1 second after play starts
       });
     }
 
