@@ -91,18 +91,19 @@
 
       const player = new Plyr('#player', {
         autoplay: true,
+        muted: true,  // Ensure muted to allow autoplay
         fullscreen: { enabled: true },
       });
 
       window.player = player;
 
-      // Wait for the player to be ready, then set the time to 1 second and play
-      setTimeout(() => {
-        player.seek(1);  // Skip to the 1-second mark
-        player.play().catch((error) => {
-          console.error("Autoplay failed:", error);
-        });
-      }, 500);  // Wait for half a second before skipping and playing
+      // Wait for the video to load, then skip to the 1-second mark and start playing
+      player.on('ready', () => {
+        setTimeout(() => {
+          player.seek(1); // Skip to 1 second
+          player.play(); // Start playing
+        }, 500); // Wait 0.5 seconds before starting
+      });
     }
 
     // Animate Enjoy!
