@@ -100,6 +100,8 @@
     const params = new URLSearchParams(window.location.search);
     const videoId = params.get("v");
 
+    let player;
+
     function startPlayer() {
       if (!videoId) {
         alert("No video ID provided.");
@@ -109,32 +111,19 @@
       const playerEl = document.getElementById("player");
       playerEl.setAttribute("data-plyr-embed-id", videoId);
 
-      const player = new Plyr('#player', {
+      player = new Plyr('#player', {
         autoplay: true,
         muted: true,  // Start muted
         fullscreen: { enabled: true },
       });
 
-      window.player = player;
-
-      // Attempt to unmute once the user interacts with the page
-      player.on('play', () => {
-        setTimeout(() => {
-          player.muted = false; // Unmute the video after user interaction
-        }, 1000);  // 1 second after play starts
+      // Attempt to unmute after the user clicks anywhere on the page
+      document.body.addEventListener('click', () => {
+        if (player) {
+          player.muted = false; // Unmute the video after first user click
+        }
       });
     }
-
-    // Prevent any clicks on links or right-click context menu
-    document.addEventListener('click', function(event) {
-      if (event.target.tagName === 'A') {
-        event.preventDefault();
-      }
-    });
-
-    document.addEventListener('contextmenu', function(event) {
-      event.preventDefault();
-    });
 
     // Animate Enjoy!
     setTimeout(() => {
