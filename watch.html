@@ -62,6 +62,11 @@
       height: 100% !important;
     }
 
+    /* Disable clicking on links */
+    a {
+      pointer-events: none;
+    }
+
     @keyframes fadeOut {
       0% { opacity: 1; }
       100% { opacity: 0; display: none; }
@@ -91,18 +96,14 @@
 
       const player = new Plyr('#player', {
         autoplay: true,
-        muted: true,  // Ensure muted to allow autoplay
         fullscreen: { enabled: true },
       });
 
       window.player = player;
 
-      // Wait for the video to load, then skip to the 1-second mark and start playing
-      player.on('ready', () => {
-        setTimeout(() => {
-          player.seek(1); // Skip to 1 second
-          player.play(); // Start playing
-        }, 500); // Wait 0.5 seconds before starting
+      // Unmute the player after it starts
+      player.on('play', () => {
+        player.muted = false; // Unmute the video
       });
     }
 
