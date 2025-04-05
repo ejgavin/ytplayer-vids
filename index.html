@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Player</title>
+
+  <!-- Include Video.js and YouTube plugin -->
+  <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/video.js@7.11.4/dist/video.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/videojs-youtube@2.8.0/dist/Youtube.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    #video-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      max-width: 500px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Interactive YouTube Video Player</h1>
+
+  <div id="video-container">
+    <div id="video-js-player" class="video-js vjs-default-skin"></div>
+    <br>
+    <input type="text" id="video-url" placeholder="Enter YouTube Video URL">
+    <button onclick="loadVideo()">Load Video</button>
+  </div>
+
+  <script>
+    // Initialize the Video.js player
+    var player = videojs('video-js-player', {
+      techOrder: ['youtube'],
+      youtube: {
+        modestbranding: 1,
+        iv_load_policy: 3
+      }
+    });
+
+    // Function to load the YouTube video by URL
+    function loadVideo() {
+      var url = document.getElementById('video-url').value;
+      var videoId = extractYouTubeID(url);
+
+      if (videoId) {
+        player.src({
+          type: 'video/youtube',
+          src: 'https://www.youtube.com/watch?v=' + videoId
+        });
+        player.play();
+      } else {
+        alert('Please enter a valid YouTube URL');
+      }
+    }
+
+    // Extract YouTube video ID from URL
+    function extractYouTubeID(url) {
+      var match = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+      return match ? match[1] : null;
+    }
+  </script>
+
+</body>
+</html>
