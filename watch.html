@@ -76,6 +76,11 @@
     window.location.replace = function() {};
     window.location.assign = function() {};
 
+    /* Block right-click menu */
+    body {
+      user-select: none; /* Disable text selection */
+    }
+
     @keyframes fadeOut {
       0% { opacity: 1; }
       100% { opacity: 0; display: none; }
@@ -118,6 +123,17 @@
         }, 1000);  // 1000ms = 1 second
       });
     }
+
+    // Prevent any clicks on links or right-click context menu
+    document.addEventListener('click', function(event) {
+      if (event.target.tagName === 'A') {
+        event.preventDefault();
+      }
+    });
+
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+    });
 
     // Animate Enjoy!
     setTimeout(() => {
