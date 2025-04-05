@@ -95,6 +95,14 @@
       });
 
       window.player = player;
+
+      // Wait for the player to be ready, then set the time to 1 second and play
+      setTimeout(() => {
+        player.seek(1);  // Skip to the 1-second mark
+        player.play().catch((error) => {
+          console.error("Autoplay failed:", error);
+        });
+      }, 500);  // Wait for half a second before skipping and playing
     }
 
     // Animate Enjoy!
