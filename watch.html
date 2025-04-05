@@ -67,19 +67,28 @@
       pointer-events: none;
     }
 
-    /* Prevent right-click menu */
+    /* Disable ability to open links in new windows */
+    a:active, a:focus {
+      outline: none;
+    }
+
+    /* Prevent redirections via JavaScript */
+    window.location.replace = function() {};
+    window.location.assign = function() {};
+
+    /* Block right-click menu */
     body {
       user-select: none; /* Disable text selection */
     }
 
-    /* Prevent interactions in other parts of the player */
+    /* Prevent interaction with embedded video thumbnails in the "More Videos" section */
     .ytp-thumbnail, .ytp-related, .ytp-upnext {
       pointer-events: none !important;
     }
 
-    /* Prevent interaction with the controls */
+    /* Allow interactions with the video controls */
     .plyr__controls, .plyr__video-wrapper {
-      pointer-events: none !important;
+      pointer-events: auto !important;
     }
 
     @keyframes fadeOut {
@@ -100,8 +109,6 @@
     const params = new URLSearchParams(window.location.search);
     const videoId = params.get("v");
 
-    let player;
-
     function startPlayer() {
       if (!videoId) {
         alert("No video ID provided.");
@@ -111,30 +118,6 @@
       const playerEl = document.getElementById("player");
       playerEl.setAttribute("data-plyr-embed-id", videoId);
 
-      player = new Plyr('#player', {
+      const player = new Plyr('#player', {
         autoplay: true,
-        muted: true,  // Start muted
-        fullscreen: { enabled: true },
-      });
-
-      // Attempt to unmute after the user clicks anywhere on the page
-      document.body.addEventListener('click', () => {
-        if (player) {
-          player.muted = false; // Unmute the video after first user click
-        }
-      });
-    }
-
-    // Animate Enjoy!
-    setTimeout(() => {
-      document.getElementById('overlay').style.display = 'none';
-      const enjoy = document.getElementById('enjoyMessage');
-      enjoy.classList.add('show');
-      setTimeout(() => {
-        enjoy.classList.remove('show');
-        startPlayer();
-      }, 1800);
-    }, 1600);
-  </script>
-</body>
-</html>
+        muted: true,
