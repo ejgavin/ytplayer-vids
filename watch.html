@@ -96,14 +96,17 @@
 
       const player = new Plyr('#player', {
         autoplay: true,
+        muted: true,  // Start muted
         fullscreen: { enabled: true },
       });
 
       window.player = player;
 
-      // Unmute the player after it starts
+      // Unmute the player after 1 second of play
       player.on('play', () => {
-        player.muted = false; // Unmute the video
+        setTimeout(() => {
+          player.muted = false; // Unmute the video after 1 second
+        }, 1000);  // 1000ms = 1 second
       });
     }
 
