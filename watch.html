@@ -67,6 +67,15 @@
       pointer-events: none;
     }
 
+    /* Disable ability to open links in new windows */
+    a:active, a:focus {
+      outline: none;
+    }
+
+    /* Prevent redirections via JavaScript */
+    window.location.replace = function() {};
+    window.location.assign = function() {};
+
     @keyframes fadeOut {
       0% { opacity: 1; }
       100% { opacity: 0; display: none; }
